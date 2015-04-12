@@ -1,0 +1,101 @@
+<section class="gameinfos-section container">
+   <ul id="gameinfo-nav" class="nav nav-pills">
+       <li ng-class="{ active:panelCtrl.isSelected(1) }"><a href ng-click="panelCtrl.setPanel(1)"> Description </a></li>
+       <li ng-class="{ active:panelCtrl.isSelected(2) }"><a href ng-click="panelCtrl.setPanel(2)"> Information </a></li>
+       <li ng-class="{ active:panelCtrl.isSelected(3) }"><a href ng-click="panelCtrl.setPanel(3)"> Reviews </a></li>
+   </ul>
+
+   <section class="container panel-sections">
+
+      <!-- Description -->
+      <div class="description" ng-show="panelCtrl.isSelected(1)">
+          <header>
+              <h3><strong> {{ game.title }} </strong> </h3>
+          </header>
+          <article>
+              {{ game.description }}
+          </article>
+      </div>
+
+      <!-- Information -->
+      <div class="information" ng-show="panelCtrl.isSelected(2)">
+          <ul class="list-group">
+              <li class="list-group-item">
+                 <h4> Platforms: </h4>
+                  <ul ng-repeat="platform in game.platforms">
+                      <li>{{ platform }} </li>
+                  </ul>
+              </li>
+
+              <li class="list-group-item">
+                  <h4> Publishers: </h4>
+                  <ul ng-repeat="publisher in game.publishers">
+                      <li> {{ publisher }} </li>
+                  </ul>
+              </li>
+
+              <li class="list-group-item">
+                  <h4> Developers: </h4>
+                  <ul ng-repeat="dev in game.developers">
+                      <li> {{ dev }} </li>
+                  </ul>
+              </li>
+              <li class="list-group-item"> <strong>In Stock </strong> : {{ game.stock }}</li>
+              <li class="list-group-item"> <strong>Price: </strong> {{ game.price }} </li>
+              <li class="list-group-item"> <strong>Sold Out: </strong> {{ game.soldOut }}</li>
+          </ul>
+      </div>
+
+      <!-- Reviews -->
+      <div class="reviews" ng-show="panelCtrl.isSelected(3)">
+          <section class="reviews-list" ng-repeat="review in game.reviews">
+              <blockquote>
+                  <strong> {{ review.stars }} stars </strong>
+                  {{ review.body }}
+                  <p class="text-right">
+                      - <cite> {{ review.author }} on {{ review.createdOn | date }}</cite>
+                  </p>
+              </blockquote>
+          </section>
+
+          <section class="add-review-form" ng-controller="AddReviewController as addreviewCtrl">
+
+              <h3> Add your review! </h3>
+               <blockquote>
+                  <strong> {{ addreviewCtrl.newReview.stars }} stars </strong>
+                  {{ addreviewCtrl.newReview.body }}
+                  <p class="text-right">
+                      - <cite> {{ addreviewCtrl.newReview.author }} </cite>
+                  </p>
+              </blockquote>
+
+
+              <form name="reviewForm" ng-submit="reviewForm.$valid && addreviewCtrl.addReview(game)" novalidate>
+                  <div class="form-group">
+                      <select class="form-control" ng-model="addreviewCtrl.newReview.stars" id="review-stars" required>
+                            <option value=""> -- Rate this game -- </option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      <input class="form-control" ng-model="addreviewCtrl.newReview.author" type="email" name="email" placeholder="Your Email" required>
+                  </div>
+
+                  <div class="form-group">
+                      <textarea class="form-control" ng-model="addreviewCtrl.newReview.body" name="body" id="body" cols="30" rows="10" placeholder="Your comment" required></textarea>
+                  </div>
+
+                  <button class="btn btn-success"> Submit review! </button>
+              </form>
+
+          </section>
+
+      </div>
+
+   </section>
+</section>
