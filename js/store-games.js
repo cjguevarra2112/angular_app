@@ -18,6 +18,9 @@
     });
 
     // What if we need a controller inside a custom directive?
+    // - Just move the controller functionality and alias inside the custom directive definition!
+    // - Move the template (contents of an element) from index.html into a separate file and remove the ng-controller attribute
+    // - Remove the element that is previously containing the template and replace it with the custom directive!
 
     // Custom Directive: Game info panels
     app.directive('gamePanels', function () {
@@ -42,8 +45,6 @@
             // move alias here
             // assign to property called 'controllerAs'
             controllerAs : 'panelCtrl'
-
-
         };
     });
     
